@@ -10,11 +10,11 @@ import { JobApplication } from 'src/job-application/entities/job-application.ent
 export class JobService {
   constructor(
     @InjectRepository(Job)
-    private readonly jobAppRepo: Repository<JobApplication>
+    private readonly jobAppRepo: Repository<JobApplication>,
   ) {}
   create(createJobDto: CreateJobDto) {
-    const jobApp = this.jobAppRepo.create(createJobDto)
-    return this.jobAppRepo.save(jobApp)
+    const jobApp = this.jobAppRepo.create(createJobDto);
+    return this.jobAppRepo.save(jobApp);
   }
 
   findAll() {
