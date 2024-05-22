@@ -1,23 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Job } from './entities/job.entity';
+import { Repository } from 'typeorm';
+import { JobApplication } from 'src/job-application/entities/job-application.entity';
 
 @Injectable()
 export class JobService {
+  constructor(
+    @InjectRepository(Job)
+    private readonly jobAppRepo: Repository<JobApplication>
+  ) {}
   create(createJobDto: CreateJobDto) {
-    return 'This action adds a new job';
+    const jobApp = this.jobAppRepo.create(createJobDto)
+    return this.jobAppRepo.save(jobApp)
   }
 
   findAll() {
-    return `This action returns all job`;
+    return this.jobAppRepo.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} job`;
+    return this.jobAppRepo.findOneBy({ id });
   }
 
   update(id: number, updateJobDto: UpdateJobDto) {
-    return `This action updates a #${id} job`;
+    return this.jobAppRepo.update(id, updateJobDto);
   }
 
   remove(id: number) {
