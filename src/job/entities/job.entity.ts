@@ -9,4 +9,14 @@ export class Job {
 
   @Column()
   description: string;
+
+  @Column()
+  location: string;
+
+  @Column()
+  salary: string;
+
+  @Column()
+  status: string;
+
 }
