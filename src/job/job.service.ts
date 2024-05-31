@@ -10,15 +10,19 @@ import { JobApplication } from 'src/job-application/entities/job-application.ent
 export class JobService {
   constructor(
     @InjectRepository(Job)
-    private readonly jobAppRepo: Repository<JobApplication>,
+    private readonly jobAppRepo: Repository<Job>,
   ) {}
-  create(createJobDto: CreateJobDto) {
+
+  // job created
+  async create(createJobDto: CreateJobDto) : Promise<Job> {
+    console.log("I am in createjob")
     const jobApp = this.jobAppRepo.create(createJobDto);
-    return this.jobAppRepo.save(jobApp);
+    return await this.jobAppRepo.save(jobApp);
   }
 
-  findAll() {
-    return this.jobAppRepo.find();
+  // finding all jobs available
+  async findAll() {
+    return await this.jobAppRepo.find();
   }
 
   findOne(id: number) {

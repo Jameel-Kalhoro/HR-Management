@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsString, IsNotEmpty, IsDate } from 'class-validator';
 
 export class CreateJobDto {
@@ -11,9 +12,10 @@ export class CreateJobDto {
 
   @IsNotEmpty()
   @IsString()
-  Location: string;
+  location: string;
 
   @IsNotEmpty()
+  @Type(()=> Date)
   @IsDate()
   datePosted: Date;
 }
