@@ -1,4 +1,5 @@
-import {  IsNotEmpty, IsString } from "class-validator";
+import {  IsArray, IsNotEmpty, IsString } from "class-validator";
+import { JobApplication } from "src/job-application/entities/job-application.entity";
 
 export class CreateCandidateDto {
     @IsNotEmpty()
@@ -16,4 +17,7 @@ export class CreateCandidateDto {
     @IsNotEmpty()
     @IsString()
     phone: string;
+
+    @IsNotEmpty()
+    applications: JobApplication
 }

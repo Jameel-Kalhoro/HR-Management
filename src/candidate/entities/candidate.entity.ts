@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { JobApplication } from "src/job-application/entities/job-application.entity";
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity()
 export class Candidate extends BaseEntity {
@@ -16,4 +17,7 @@ export class Candidate extends BaseEntity {
 
     @Column()
     phone: string;
+
+    @OneToMany(() => JobApplication, jobApplication => jobApplication.candidate)
+    applications: JobApplication[];
 }

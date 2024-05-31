@@ -1,4 +1,7 @@
-import { BaseEntity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { Candidate } from 'src/candidate/entities/candidate.entity';
+import { BaseEntity, Column, PrimaryGeneratedColumn, ManyToOne, Entity} from 'typeorm';
+
+@Entity()
 export class JobApplication extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,11 +10,15 @@ export class JobApplication extends BaseEntity {
   title: string;
 
   @Column()
-  company: string;
+  coverLetter: string;
 
-  @Column()
+  @Column({type:'date'})
   dateApplied: Date;
 
   @Column()
   status: 'applied' | 'interview' | 'offer' | 'rejected';
+
+  @ManyToOne(()=>Candidate, candidate => candidate.applications)
+  candidate: Candidate;
+
 }
