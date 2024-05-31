@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, BaseEntity, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
-export class Job {
+export class Job extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,10 +13,7 @@ export class Job {
   @Column()
   location: string;
 
-  @Column()
-  salary: string;
-
-  @Column()
-  status: string;
+  @Column({type: 'date'})
+  datePosted: Date;
 
 }
