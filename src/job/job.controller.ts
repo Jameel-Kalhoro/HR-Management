@@ -36,4 +36,14 @@ export class JobController {
   remove(@Param('id') id: string) {
     return this.jobService.remove(+id);
   }
+
+  @Patch(':id/accept')
+  accept(@Param('id') id: string) {
+    return this.jobService.acceptJobApplication(+id);
+  }
+
+  @Patch(':id/reject')
+  reject(@Param('id') id: string) {
+    return this.jobService.rejectJobApplication(+id);
+  }
 }
