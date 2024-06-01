@@ -1,4 +1,5 @@
-import { Column, BaseEntity, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { JobApplication } from 'src/job-application/entities/job-application.entity';
+import { Column, BaseEntity, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Job extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -15,5 +16,8 @@ export class Job extends BaseEntity {
 
   @Column({type: 'date'})
   datePosted: Date;
+
+  @OneToMany(()=>JobApplication, jobApplication=>jobApplication.job)
+  applications: JobApplication[];
 
 }

@@ -1,4 +1,5 @@
 import { Candidate } from 'src/candidate/entities/candidate.entity';
+import { Job } from 'src/job/entities/job.entity';
 import { BaseEntity, Column, PrimaryGeneratedColumn, ManyToOne, Entity} from 'typeorm';
 
 @Entity()
@@ -20,5 +21,8 @@ export class JobApplication extends BaseEntity {
 
   @ManyToOne(()=>Candidate, candidate => candidate.applications)
   candidate: Candidate;
+
+  @ManyToOne(()=>Job, job=>job.applications)
+  job: Job
 
 }

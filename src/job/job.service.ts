@@ -13,9 +13,8 @@ export class JobService {
     private readonly jobAppRepo: Repository<Job>,
   ) {}
 
-  // job created
+  // story 1 creating job as a user
   async create(createJobDto: CreateJobDto) : Promise<Job> {
-    console.log("I am in createjob")
     const jobApp = this.jobAppRepo.create(createJobDto);
     return await this.jobAppRepo.save(jobApp);
   }
@@ -25,15 +24,16 @@ export class JobService {
     return await this.jobAppRepo.find();
   }
 
-  findOne(id: number) {
-    return this.jobAppRepo.findOneBy({ id });
+
+  // for searching job
+  async findOne(id: number) {
+    return await this.jobAppRepo.findOneBy({ id });
   }
 
-  update(id: number, updateJobDto: UpdateJobDto) {
-    return this.jobAppRepo.update(id, updateJobDto);
-  }
 
-  remove(id: number) {
+  // user can remove his created job
+  async remove(id: number) {
+    await this.jobAppRepo.delete(id);
     return `This action removes a #${id} job`;
   }
 }

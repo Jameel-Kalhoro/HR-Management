@@ -18,6 +18,5 @@ export class CreateCandidateDto {
     @IsString()
     phone: string;
 
-    @IsNotEmpty()
-    applications: JobApplication
+    
 }
