@@ -19,6 +19,14 @@ export class JobApplication extends BaseEntity {
   @Column()
   status: 'applied' | 'interview' | 'offer' | 'rejected';
 
+  @Column()
+  candidateId: number;
+
+  @Column()
+  jobId: number;
+
+
+
   @ManyToOne(()=>Candidate, candidate => candidate.applications)
   candidate: Candidate;
 

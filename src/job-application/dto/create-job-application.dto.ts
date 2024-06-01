@@ -8,7 +8,7 @@ export class CreateJobApplicationDto {
 
   @IsNotEmpty()
   @IsString()
-  company: string;
+  coverLetter: string;
 
   @IsNotEmpty()
   @Type(()=>Date)
