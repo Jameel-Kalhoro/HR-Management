@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Job } from './entities/job.entity';
 import { Repository } from 'typeorm';
 import { JobApplication } from 'src/job-application/entities/job-application.entity';
+import { Candidate } from 'src/candidate/entities/candidate.entity';
 
 @Injectable()
 export class JobService {
@@ -13,6 +14,8 @@ export class JobService {
     private readonly jobAppRepo: Repository<Job>,
     @InjectRepository(JobApplication)
     private readonly jobApplicationRep: Repository<JobApplication>,
+    @InjectRepository(Candidate)
+    private readonly candidateRepo: Repository<Candidate>
   ) {}
 
   // story 1 creating job as a user
@@ -59,5 +62,14 @@ export class JobService {
     jobApplicationRep.status = 'rejected';
 
     return await this.jobApplicationRep.update(id,jobApplicationRep);
-  }  
+  }
+  
+  // user can view all applications applied by single candidate
+  async findJobApplicationsByCandidate(candidateId:number){
+    const candidate = await this.candidateRepo.findOne({where:{id: candidateId}, relations:['applications']});
+    if(!candidate){
+      throw new NotFoundException("Applications not found")
+    }
+    return candidate.applications;
+  }
 }

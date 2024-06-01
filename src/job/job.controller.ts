@@ -46,4 +46,9 @@ export class JobController {
   reject(@Param('id') id: string) {
     return this.jobService.rejectJobApplication(+id);
   }
+
+  @Get(':id/applications')
+  findJobApplicationsByCandidate(@Param('id') id: string) {
+    return this.jobService.findJobApplicationsByCandidate(+id);
+  }
 }
