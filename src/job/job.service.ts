@@ -1,9 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Job } from './entities/job.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { JobApplication } from '../job-application/entities/job-application.entity';
 import { Candidate } from '../candidate/entities/candidate.entity';
 
@@ -25,25 +24,25 @@ export class JobService {
   }
 
   // finding all jobs available
-  async findAll() {
+  async findAll(): Promise<Job[]> {
     return await this.jobAppRepo.find();
   }
 
 
   // for searching job
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Job> {
     return await this.jobAppRepo.findOneBy({ id });
   }
 
 
   // user can remove his created job
-  async remove(id: number) {
+  async remove(id: number): Promise<String> {
     await this.jobAppRepo.delete(id);
     return `This action removes a #${id} job`;
   }
 
   // user can accept job application
-  async acceptJobApplication(id:number){
+  async acceptJobApplication(id:number): Promise<UpdateResult>{
     const jobApplicationRep = await this.jobApplicationRep.findOneBy({id});
     if(!jobApplicationRep){
       throw new NotFoundException("Job application not found");
@@ -54,7 +53,7 @@ export class JobService {
   }
 
   // user can reject job application
-  async rejectJobApplication(id:number){
+  async rejectJobApplication(id:number): Promise<UpdateResult>{
     const jobApplicationRep = await this.jobApplicationRep.findOneBy({id});
     if(!jobApplicationRep){
       throw new NotFoundException("Job application not found");
@@ -65,7 +64,7 @@ export class JobService {
   }
   
   // user can view all applications applied by single candidate
-  async findJobApplicationsByCandidate(candidateId:number){
+  async findJobApplicationsByCandidate(candidateId:number):Promise<JobApplication[]>{
     const candidate = await this.candidateRepo.findOne({where:{id: candidateId}, relations:['applications']});
     if(!candidate){
       throw new NotFoundException("Applications not found")

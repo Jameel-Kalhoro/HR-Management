@@ -198,7 +198,7 @@ describe('CandidateService', () => {
 
   describe('updateJobApplication', () => {
     const updateJobApplicationDto = {
-      status: 'interview',
+      coverLetter:"this is second cover letter",
     };
   
     const existingJobApp = {
@@ -236,8 +236,5 @@ describe('CandidateService', () => {
       await expect(service.updateJobApplication(existingJobApp.id, updateJobApplicationDto as any)).rejects.toThrow(NotFoundException);
       expect(jobAppRepo.findOneBy).toHaveBeenCalledWith({ id: existingJobApp.id });
     });
-  });
-  
-  
-    
+  });  
 });
