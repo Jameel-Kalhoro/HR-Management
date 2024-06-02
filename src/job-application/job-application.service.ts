@@ -12,24 +12,9 @@ export class JobApplicationService {
     private readonly jobAppRepo: Repository<JobApplication>,
   ){}
 
-  create(createJobApplicationDto: CreateJobApplicationDto) {
-    return 'This action adds a new jobApplication';
-  }
 
-  async findAll() {
+  async findAll(): Promise<JobApplication[]> {
     return this.jobAppRepo.find();
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} jobApplication`;
-  }
-
-  update(id: number, updateJobApplicationDto: UpdateJobApplicationDto) {
-    return `This action updates a #${id} jobApplication`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} jobApplication`;
   }
 
   
