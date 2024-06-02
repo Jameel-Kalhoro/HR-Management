@@ -6,7 +6,7 @@ import { JobApplication } from '../job-application/entities/job-application.enti
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Job } from '../job/entities/job.entity';
 import { CreateCandidateDto } from './dto/create-candidate.dto'; 
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UpdateCandidateDto } from './dto/update-candidate.dto';
 
 describe('CandidateService', () => {
@@ -162,5 +162,82 @@ describe('CandidateService', () => {
       expect(candidateRepo.remove).toHaveBeenCalledWith(candidate);
     });
   });
+
+  describe('createJobApplication', () => {
+    const createJobApplicationDto = {
+      id: 1,
+      title: "Developer",
+      coverLetter:"this is a cover letter",
+      candidateId: 1,
+      jobId: 1,
+      applicationDate: new Date(),
+      status: 'applied',
+    };
+  
+    const candidate = { id: 1, name: 'John Doe', email: 'john.doe@example.com', phone: '+92-123-5678', resume: 'resume.pdf' };
+    const job = { id: 1, title: 'Software Engineer', description: 'Job description', location: 'Remote', datePosted: new Date() };
+    
+    // test for creating job application
+    it('should create a new job application', async () => {
+      jest.spyOn(candidateRepo, 'findOneBy').mockResolvedValue(candidate as any);
+      jest.spyOn(jobRepo, 'findOneBy').mockResolvedValue(job as any);
+      jest.spyOn(jobAppRepo, 'findOne').mockResolvedValue(null);
+      jest.spyOn(jobAppRepo, 'create').mockReturnValue(createJobApplicationDto as any);
+      jest.spyOn(jobAppRepo, 'save').mockResolvedValue(createJobApplicationDto as any);
+  
+      const result = await service.createJobApplication(createJobApplicationDto as any);
+      expect(result).toEqual(createJobApplicationDto);
+      expect(candidateRepo.findOneBy).toHaveBeenCalledWith({ id: createJobApplicationDto.candidateId });
+      expect(jobRepo.findOneBy).toHaveBeenCalledWith({ id: createJobApplicationDto.jobId });
+      expect(jobAppRepo.findOne).toHaveBeenCalledWith({
+        where: { candidate: { id: createJobApplicationDto.candidateId }, job: { id: createJobApplicationDto.jobId } },
+      });
+      expect(jobAppRepo.save).toHaveBeenCalledWith(createJobApplicationDto);
+    });
+  });
+
+  describe('updateJobApplication', () => {
+    const updateJobApplicationDto = {
+      status: 'interview',
+    };
+  
+    const existingJobApp = {
+      id: 1,
+      title: 'Full Stack Developer',
+      coverLetter: 'I am writing to apply for the Full Stack Developer position at your company. I have been working as a Full Stack Developer for a few years now and I think I would be a good fit for this job. I have experience with a lot of different technologies like JavaScript, HTML, CSS, and Python.',
+      dateApplied: '6-1-2024',
+      status: 'interview',
+      candidateId: 2,
+      jobId: 6,
+    };
+  
+    const updatedJobApp = {
+      ...existingJobApp,
+      ...updateJobApplicationDto,
+    };
+    
+    // test for updating existing job application
+    it('should update an existing job application', async () => {
+      jest.spyOn(jobAppRepo, 'findOneBy').mockResolvedValueOnce(existingJobApp as any);
+      jest.spyOn(jobAppRepo, 'update').mockResolvedValueOnce(undefined);
+      jest.spyOn(jobAppRepo, 'findOneBy').mockResolvedValueOnce(updatedJobApp as any);
+  
+      const result = await service.updateJobApplication(existingJobApp.id, updateJobApplicationDto as any);
+      expect(result).toEqual(updatedJobApp);
+      expect(jobAppRepo.findOneBy).toHaveBeenCalledWith({ id: existingJobApp.id });
+      expect(jobAppRepo.update).toHaveBeenCalledWith(existingJobApp.id, updateJobApplicationDto);
+      expect(jobAppRepo.findOneBy).toHaveBeenCalledWith({ id: existingJobApp.id });
+    });
+  
+    // test for update job application if application not found
+    it('should throw a NotFoundException if job application not found', async () => {
+      jest.spyOn(jobAppRepo, 'findOneBy').mockResolvedValueOnce(null);
+  
+      await expect(service.updateJobApplication(existingJobApp.id, updateJobApplicationDto as any)).rejects.toThrow(NotFoundException);
+      expect(jobAppRepo.findOneBy).toHaveBeenCalledWith({ id: existingJobApp.id });
+    });
+  });
+  
+  
     
 });

@@ -54,7 +54,7 @@ export class CandidateService {
   }
 
   // creating job application
-  async createJobApplication(createJobApplicationDto: CreateJobApplicationDto) {
+  async createJobApplication(createJobApplicationDto: CreateJobApplicationDto): Promise<JobApplication> {
     const { candidateId, jobId, ...jobAppDetails } = createJobApplicationDto;
     const candidate = await this.candidateRepo.findOneBy({ id: candidateId });
     const job = await this.jobRepo.findOneBy({ id: jobId });
@@ -86,7 +86,7 @@ export class CandidateService {
 
 
   // update job application
-  async updateJobApplication(id: number, updateJobApplicationDto: UpdateJobApplicationDto) {
+  async updateJobApplication(id: number, updateJobApplicationDto: UpdateJobApplicationDto): Promise<JobApplication> {
     const jobApp = await this.jobAppRepo.findOneBy({ id });
     if (!jobApp) {
       throw new NotFoundException('Job application not found');
