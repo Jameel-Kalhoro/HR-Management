@@ -10,8 +10,8 @@ import {
 import { CandidateService } from './candidate.service';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
 import { UpdateCandidateDto } from './dto/update-candidate.dto';
-import { CreateJobApplicationDto } from 'src/job-application/dto/create-job-application.dto';
-import { UpdateJobApplicationDto } from 'src/job-application/dto/update-job-application.dto';
+import { CreateJobApplicationDto } from '../job-application/dto/create-job-application.dto';
+import { UpdateJobApplicationDto } from '../job-application/dto/update-job-application.dto';
 
 @Controller('candidate')
 export class CandidateController {

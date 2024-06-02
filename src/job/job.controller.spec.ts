@@ -4,6 +4,8 @@ import { JobService } from './job.service';
 import { Repository } from 'typeorm';
 import { Job } from './entities/job.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { JobApplication } from '../job-application/entities/job-application.entity';
+import { Candidate } from '../candidate/entities/candidate.entity';
 
 describe('JobController', () => {
   let controller: JobController;
@@ -15,7 +17,15 @@ describe('JobController', () => {
         JobService,
         {
           provide: getRepositoryToken(Job),
-          useClass: Repository<Job>,
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(JobApplication),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Candidate),
+          useClass: Repository,
         },
       ],
     }).compile();
@@ -26,4 +36,7 @@ describe('JobController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  
+  
 });

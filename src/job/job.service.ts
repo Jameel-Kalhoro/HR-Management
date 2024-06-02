@@ -4,8 +4,8 @@ import { UpdateJobDto } from './dto/update-job.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Job } from './entities/job.entity';
 import { Repository } from 'typeorm';
-import { JobApplication } from 'src/job-application/entities/job-application.entity';
-import { Candidate } from 'src/candidate/entities/candidate.entity';
+import { JobApplication } from '../job-application/entities/job-application.entity';
+import { Candidate } from '../candidate/entities/candidate.entity';
 
 @Injectable()
 export class JobService {

@@ -1,5 +1,5 @@
-import { Candidate } from 'src/candidate/entities/candidate.entity';
-import { Job } from 'src/job/entities/job.entity';
+import { Candidate } from '../../candidate/entities/candidate.entity';
+import { Job } from '../../job/entities/job.entity';
 import { BaseEntity, Column, PrimaryGeneratedColumn, ManyToOne, Entity} from 'typeorm';
 
 @Entity()

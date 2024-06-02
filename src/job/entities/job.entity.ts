@@ -1,4 +1,4 @@
-import { JobApplication } from 'src/job-application/entities/job-application.entity';
+import { JobApplication } from '../../job-application/entities/job-application.entity';
 import { Column, BaseEntity, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Job extends BaseEntity {
