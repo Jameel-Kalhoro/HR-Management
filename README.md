@@ -71,3 +71,18 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Checklist of tasks
+=> For 2 days, I only watched and explore ducumentation of Nestjs and TypeORM.
+=> After that I start working on code.
+=> update entities and DTOs of Job, Job Application, and Candidate.
+=> After, It took me 2 days to complete all services of Candidate, Job, and Job Application.
+=> It took me One-and-Half day to write tests for services, Having different inputs, exceptions and errors.
+
+## Breif
+HR Management Sytem, Having 2 Roles User and Candidate. User can create jobs, view all the jobs applied by the Candidate. User can also accept or reject the Job Application. Candidate can read, update, delete, and create information for staying up-to-date. Also, Candidate can create the Job Application.
+=> Created all the neccassary methods.
+=> Validated payloads with Proper DTOs.
+=> Created Tests for each service.
+=> Made sure every story given in requirements met.
